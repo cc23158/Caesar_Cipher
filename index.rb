@@ -1,41 +1,37 @@
-print "Digite a sua String: "
-frase = gets.chomp
+def caesar_cipher(text, value)
+  responseArray = Array.new()
 
-vetorFrase = Array.new()
+  text.strip().split("").each do |char|
+    numberASCII = char.ord + value
 
-frase.strip().split("").each do |char|
-  numeroASCI = char.ord + 3
+    if char.ord < 97          # if is an uppercase char
+      if numberASCII.ord <= 90 # if can switch without return to the beginning of the alphabet
+        newChar = numberASCII.chr
 
-  if char.ord < 97
-    if numeroASCI.ord < 90
-      charNovo = numeroASCI.chr
+      else
+        newChar = ("A".ord + (numberASCII - 91)).chr
+      end
 
-    elsif char.ord == 88
-      charNovo = 65.chr
+    else                        # if is a downcase char
+      if numberASCII.ord <= 122 # if can switch without return to the beginning of the alphabet
+        newChar = numberASCII.chr
 
-    elsif char.ord == 89
-      charNovo = 66.chr
-
-    elsif char.ord == 90
-      charNovo = 67.chr
+      else
+        newChar = ("a".ord + (numberASCII - 123)).chr
+      end
     end
 
-  else
-    if char.ord < 120
-      charNovo = numeroASCI.chr
-
-    elsif char.ord == 120
-      charNovo = 97.chr
-
-    elsif char.ord == 121
-      charNovo = 98.chr
-
-    elsif char.ord == 122
-      charNovo = 99.chr
-    end
+    responseArray.push(newChar)
   end
 
-  vetorFrase.push(charNovo)
+  puts responseArray.join()
 end
 
-puts vetorFrase.join()
+# Questions #
+print "Type your string: "
+text = gets.chomp
+
+print "Enter the number of characters to be skipped for substitution: "
+value = gets.chomp.to_i
+
+caesar_cipher(text, value)
